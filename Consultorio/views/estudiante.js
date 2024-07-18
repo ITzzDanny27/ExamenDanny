@@ -49,11 +49,12 @@ var cargaTabla = () => {
 };
 
 
-var cargarEstudiante = (estudiante_id) => {
-    console.log("ID del estudiante:", estudiante_id);
-    $.get("../controllers/estudiante.controller.php?op=uno&id=" + estudiante_id, (data) => {
+var cargarEstudiante = (id_estudiante) => {
+    console.log("ID del estudiante:", id_estudiante);
+    $.get("../controllers/estudiante.controller.php?op=uno&id=" + id_estudiante, (data) => {
         var Estudiante = JSON.parse(data);
         console.log("Estudiante encontrado:", Estudiante);
+        $("#EditarEstudianteId").val(Estudiante.estudiante_id);
         $("#NombreE").val(Estudiante.nombre);
         $("#ApellidoE").val(Estudiante.apellido);
         $("#FechaNacimientoE").val(Estudiante.fecha_nacimiento);
@@ -69,39 +70,39 @@ var cargarEstudiante = (estudiante_id) => {
     });
 };
 
-var buscarEstudiante = (id_estudiante) => {
-    $.get("../controllers/estudiante.controller.php?op=uno&id=" + id_estudiante, (data) => {
-        try {
-            var Estudiante = JSON.parse(data);
+// var buscarEstudiante = (id_estudiante) => {
+//     $.get("../controllers/estudiante.controller.php?op=uno&id=" + id_estudiante, (data) => {
+//         try {
+//             var Estudiante = JSON.parse(data);
 
-            if (Estudiante && Estudiante.id_estudiante) {
-                console.log("Estudiante encontrado:", Estudiante);
+//             if (Estudiante && Estudiante.id_estudiante) {
+//                 console.log("Estudiante encontrado:", Estudiante);
 
-                var html="";
+//                 var html="";
 
-                html += `
-                    <tr>
-                        <td>${Estudiante.id_estudiante}</td>
-                        <td>${Estudiante.nombre}</td>
-                        <td>${Estudiante.apellido}</td>
-                        <td>${Estudiante.fecha_nacimiento}</td>
-                        <td>
-                            <button class="btn btn-primary" onclick="cargarEstudiante(${Estudiante.id_estudiante})">Editar</button>
-                            <button class="btn btn-danger" onclick="eliminar(${Estudiante.id_estudiante})">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
+//                 html += `
+//                     <tr>
+//                         <td>${Estudiante.id_estudiante}</td>
+//                         <td>${Estudiante.nombre}</td>
+//                         <td>${Estudiante.apellido}</td>
+//                         <td>${Estudiante.fecha_nacimiento}</td>
+//                         <td>
+//                             <button class="btn btn-primary" onclick="cargarEstudiante(${Estudiante.id_estudiante})">Editar</button>
+//                             <button class="btn btn-danger" onclick="eliminar(${Estudiante.id_estudiante})">Eliminar</button>
+//                         </td>
+//                     </tr>
+//                 `;
 
-                $("#cuerpoestudiantes").html(html);
-            } else {
-                console.error("Estudiante no encontrado:", Estudiante);
-                cargaTabla();
-            }
-        } catch (e) {
-            console.error("Error parsing JSON:", e);
-        }
-    });
-}
+//                 $("#cuerpoestudiantes").html(html);
+//             } else {
+//                 console.error("Estudiante no encontrado:", Estudiante);
+//                 cargaTabla();
+//             }
+//         } catch (e) {
+//             console.error("Error parsing JSON:", e);
+//         }
+//     });
+// }
 
 
 // Guardar o editar un estudiante
@@ -129,12 +130,11 @@ var guardar = (e) => {
     });
 };
 
-
 // Editar un estudiante
 var editar = (e) => {
     e.preventDefault();
     var frm_editar_estudiantes = new FormData($("#frm_editar_estudiantes")[0]);
-    console.log("Datos del formulario:", [...frm_editar_estudiantes.entries()]); // Muestra los datos del formulario en la consola
+    console.log("Datos del formulario:", frm_editar_estudiantes);
     var ruta = "../controllers/estudiante.controller.php?op=actualizar";
 
     $.ajax({
@@ -143,30 +143,16 @@ var editar = (e) => {
         data: frm_editar_estudiantes,
         processData: false,
         contentType: false,
-        success: function (response) {
-            try {
-                var datos = JSON.parse(response);
-                console.log(datos);
-                if (datos === "Estudiante actualizado") {
-                    alert("Estudiante actualizado exitosamente.");
-                    // location.reload(); // Descomentar si se quiere recargar la página
-                } else {
-                    alert("Error: " + datos);
-                }
-                $("#modalEditarEstudiante").modal("hide");
-            } catch (error) {
-                console.error("Error al procesar la respuesta:", error);
-                alert("Error al procesar la respuesta del servidor.");
-            }
+        success: function (datos) {
+            console.log(datos);
+            $("#modalEditarEstudiante").modal("hide");
+            location.reload();
         },
         error: function (xhr, status, error) {
             console.error("Error al actualizar:", error);
-            alert("Error al actualizar el estudiante. Por favor, intente nuevamente.");
         }
     });
 };
-
-
 
 // Eliminar un estudiante
 var eliminar = (EstudiantesId) => {

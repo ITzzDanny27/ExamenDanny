@@ -178,7 +178,7 @@ var guardarAsignacion = (e) =>{
         processData: false,
         success: function (datos) {
             console.log(datos);
-            //location.reload();
+            location.reload();
             $("#modalAsignacion").modal("hide");
         },
         error: function (xhr, status, error) {
@@ -252,9 +252,9 @@ var eliminar = (InscripcionesId) => {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "../controllers/inscripcion.controller.php?op=eliminar",
+                url: "../controllers/asignacion.controller.php?op=eliminar",
                 type: "POST",
-                data: { id_inscripcion: InscripcionesId },
+                data: { id_asignacion: InscripcionesId },
                 success: (resultado) => {
                     console.log("Respuesta del servidor:", resultado);
                     try {
@@ -266,7 +266,7 @@ var eliminar = (InscripcionesId) => {
                                 icon: "success",
                             });
                             cargaTabla();
-                        }
+                        }location.reload();
                     } catch (e) {
                         Swal.fire({
                             title: "Inscripción",

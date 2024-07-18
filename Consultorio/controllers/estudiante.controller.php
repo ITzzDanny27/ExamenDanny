@@ -45,28 +45,19 @@ switch($_GET["op"]){
         break;
 
     case "actualizar":
-            // Verificar si se han recibido todos los campos necesarios
-        if (
-            isset($_POST["EditarEstudianteId"], $_POST["NombreE"], $_POST["ApellidoE"], $_POST["GradoE"]) &&
-            !empty($_POST["EditarEstudianteId"]) &&
-            !empty($_POST["NombreE"]) &&
-            !empty($_POST["ApellidoE"]) &&
-            !empty($_POST["GradoE"])
-            ) {
-                $estudiante_id = $_POST["EditarEstudianteId"];
-                $nombre = $_POST["NombreE"];
-                $apellido = $_POST["ApellidoE"];
-                $fecha_nacimiento = $_POST["FechaNacimientoE"] ?? null;
-                $grado = $_POST["GradoE"];
-        
-                // Llamar a la función de actualización del estudiante
-                $estudiante->actualizarEstudiante($estudiante_id, $nombre, $apellido, $fecha_nacimiento, $grado);
-                echo json_encode("Estudiante actualizado");
-            } else {
-                echo json_encode("Faltan Datos");
-            }
+        $estudiante_id = $_POST["EditarEstudianteId"] ?? null;
+        $nombre = $_POST["NombreE"] ?? null;
+        $apellido = $_POST["ApellidoE"] ?? null;
+        $fecha_nacimiento = $_POST["FechaNacimientoE"] ?? null;
+        $grado = $_POST["GradoE"] ?? null;
+
+        if (!empty($estudiante_id) && !empty($nombre) && !empty($apellido) && !empty($fecha_nacimiento) && !empty($grado)) {
+            $estudiante->actualizarEstudiante($estudiante_id, $nombre, $apellido, $fecha_nacimiento, $grado);
+            echo json_encode("Estudiante actualizado");
+        } else {
+            echo json_encode("Faltan Datos");
+        }
         break;
-        
 
     case "eliminar":
         $estudiante_id = $_POST["id_estudiante"] ?? null;

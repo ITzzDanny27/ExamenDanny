@@ -64,9 +64,10 @@ class Clase {
     public function eliminarClase($clase_id) {
         $conectar = new Clase_Conectar();
         $con = $conectar->conectar();
+
         $sql = "DELETE FROM clases WHERE clase_id = ?";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("s", $clase_id);
+        $stmt->bind_param("i", $clase_id);
         $resultado = $stmt->execute();
 
         if ($resultado) {

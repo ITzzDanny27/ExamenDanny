@@ -50,10 +50,10 @@ switch ($_GET["op"]) {
         break;
 
     case "actualizar":
-        $id_profesor = $_POST["EditarProfesorId"] ?? null;
+        $id_profesor = $_POST["EditarProfesoresId"] ?? null;
         $nombre = $_POST["EditarNombre"] ?? null;
         $apellido = $_POST["EditarApellido"] ?? null;
-        $especialidad = $_POST["EditarEspecialidad"] ?? null;
+        $especialidad = $_POST["EspecialidadE"] ?? null;
         $email = $_POST["EditarEmail"] ?? null;
 
         if (!empty($id_profesor) && !empty($nombre) && !empty($apellido) && !empty($especialidad) && !empty($email)) {

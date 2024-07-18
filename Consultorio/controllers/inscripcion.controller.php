@@ -45,9 +45,9 @@ switch($_GET["op"]) {
     break;
 
     case "actualizar":
-        $id_inscripcion = $_POST["InscripcionId"];
-        $id_estudiante = $_POST["EstudianteId"];
-        $id_asignacion = $_POST["AsignacionId"];
+        $id_inscripcion = $_POST["EditarIncripcionId"];
+        $id_estudiante = $_POST["ID_EstudianteE"];
+        $id_asignacion = $_POST["AsignacionE"];
 
         if (!empty($id_inscripcion) && !empty($id_estudiante) && !empty($id_asignacion)) {
             $respuesta = $inscripcion->actualizarInscripcion($id_inscripcion, $id_estudiante, $id_asignacion);

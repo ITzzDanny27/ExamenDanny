@@ -48,8 +48,8 @@ class Clase_Estudiante{
         $con = $conexion->conectar();
         $sql="UPDATE estudiantes SET nombre=?, apellido=?, fecha_nacimiento=?, grado=? WHERE estudiante_id=?";
         $stmt = mysqli_prepare($con, $sql);
-        $stmt->bind_param("ssssi", $nombre, $apellido, $fecha_nacimiento, $grado, $estudiante_id); // Cambiado a "i" para el ID
-        stmt->execute();
+        $stmt->bind_param("ssssi", $nombre, $apellido, $fecha_nacimiento, $grado, $estudiante_id);
+        $stmt->execute();
         $con->close();
     }
 

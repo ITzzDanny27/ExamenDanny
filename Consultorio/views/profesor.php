@@ -107,8 +107,8 @@
                                     <input type="text" name="EditarApellido" id="EditarApellido" placeholder="Seleccione el Departamento del Profesor" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="Departamento">Departamento</label><br>
-                                    <input type="text" name="EditarDepartamento" id="EditarDepartamento" placeholder="Inserte el Email del Profesor" class="form-control" required>
+                                    <label for="EspecialidadE">Especialidad</label><br>
+                                    <input type="text" name="EspecialidadE" id="EspecialidadE" placeholder="Inserte la Especialidad del Profesor" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="Email">Email</label>

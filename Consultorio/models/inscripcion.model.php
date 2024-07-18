@@ -99,13 +99,11 @@ class Clase_Inscripcion {
         $conexion = new Clase_Conectar();
         $con = $conexion->conectar();
 
-        $sql = "SELECT i.id_inscripcion, e.nombre AS nombre_estudiante, e.apellido AS apellido_estudiante, 
-                       p.nombre_profesor, p.apellido_profesor, c.nombre_clase, c.descripcion, i.fecha_inscripcion 
-                FROM inscripciones AS i
-                INNER JOIN estudiantes AS e ON e.id_estudiante = i.id_estudiante
-                INNER JOIN asignaciones AS a ON a.id_asignacion = i.id_asignacion
-                INNER JOIN profesores AS p ON p.id_profesor = a.id_profesor
-                INNER JOIN clases AS c ON c.id_clase = a.id_clase
+        $sql = "SELECT i.id_inscripcion, e.nombre AS nombre_estu, e.apellido AS apellido_estu, p.nombre, p.apellido, c.nombre_clases, i.fecha_inscripcion FROM inscripciones AS i
+                INNER JOIN estudiantes AS e ON e.estudiante_id = i.id_estudiante
+                INNER JOIN asignaciones AS a ON a.asignacion_id = i.id_asignacion
+                INNER JOIN profesores AS p ON p.profesor_id = a.profesor_id
+                INNER JOIN clases AS c ON c.clase_id = a.clase_id
                 WHERE i.id_inscripcion = ?";
 
         $stmt = $con->prepare($sql);

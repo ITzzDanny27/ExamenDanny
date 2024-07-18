@@ -40,7 +40,7 @@ var cargaTabla = () => {
                         <td>${unInscripcion.nombre_clases}</td>
                         <td>${unInscripcion.fecha_inscripcion}</td>
                         <td>
-                            <button class="btn btn-primary" onclick="cargarClase(${unInscripcion.id_inscripcion})">Editar</button>
+                            <button class="btn btn-primary" onclick="cargarInscripcion(${unInscripcion.id_inscripcion})">Editar</button>
                             <button class="btn btn-danger" onclick="eliminar(${unInscripcion.id_inscripcion})">Eliminar</button>
                         </td>
                     </tr>
@@ -54,16 +54,15 @@ var cargaTabla = () => {
 };
 
 
-var cargarClase = (id_clase) => {
-    $.get("../controllers/clase.controller.php?op=uno&id=" + id_clase, (data) => {
+var cargarInscripcion = (id_inscripcion) => {
+    $.get("../controllers/inscripcion.controller.php?op=uno&id=" + id_inscripcion, (data) => {
         var Clase = JSON.parse(data);
         console.log("Clase encontrada:", Clase);
-        $("#EditarClaseId").val(Clase.id_clase);
-        $("#EditarClaseCurso").val(Clase.nombre_curso);
-        $("#EditarClaseProfesor").val(Clase.id_profesor);
-        $("#EditarClaseAula").val(Clase.numero_aula);
-        $("#EditarClaseHorario").val(Clase.horario);
-        $("#modalEditarClase").modal("show");
+        $("#EditarIncripcionId").val(Clase.id_inscripcion);
+        $("#ID_EstudianteE").val(Clase.id_estudiante);
+        $("#AsignacionE").val(Clase.id_asignacion);
+
+        $("#modalEditarInscripcion").modal("show");
     });
 }
 
@@ -110,7 +109,7 @@ var guardar = (e) => {
         processData: false,
         success: function (datos) {
             console.log(datos);
-            //location.reload();
+            location.reload();
             $("#modalInscripcion").modal("hide");
         },
         error: function (xhr, status, error) {
@@ -122,19 +121,21 @@ var guardar = (e) => {
 var editar = (e) => {
     e.preventDefault();
 
-    var frm_editar_clase = new FormData($("#frm_editar_clase")[0]);
-    var ruta = "../controllers/clase.controller.php?op=actualizar";
+    var frm_editar_inscripcion = new FormData($("#frm_editar_inscripcion")[0]);
+    var ruta = "../controllers/inscripcion.controller.php?op=actualizar";
 
     $.ajax({
         url: ruta,
         type: "POST",
-        data: frm_editar_clase,
+        data: frm_editar_inscripcion,
         contentType: false,
         processData: false,
         success: function (datos) {
             console.log(datos);
-            $("#modalEditarClase").modal("hide");
+            $("#modalEditarInscripcion").modal("hide");
             cargaTabla();
+            location.reload();
+
         },
         error: function (xhr, status, error) {
             console.error("Error al actualizar:", error);
@@ -143,7 +144,7 @@ var editar = (e) => {
 };
 
 // Eliminar una Clase
-var eliminar = (ClasesId) => {
+var eliminar = (IncripcionId) => {
     Swal.fire({
         title: "Clase",
         text: "¿Está seguro que desea eliminar la Clase?",
@@ -155,9 +156,9 @@ var eliminar = (ClasesId) => {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "../controllers/clase.controller.php?op=eliminar",
+                url: "../controllers/inscripcion.controller.php?op=eliminar",
                 type: "POST",
-                data: { id_clase: ClasesId },
+                data: { id_inscripcion: IncripcionId},
                 success: (resultado) => {
                     console.log("Respuesta del servidor:", resultado);
                     try {
@@ -169,7 +170,8 @@ var eliminar = (ClasesId) => {
                                 icon: "success",
                             });
                             cargaTabla();
-                        }
+                            
+                        }location.reload();
                     } catch (e) {
                         Swal.fire({
                             title: "Clase",

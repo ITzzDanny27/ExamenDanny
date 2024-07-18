@@ -31,7 +31,7 @@ var cargaTabla = () => {
                 html += `
                     <tr>
                         <td>${indice + 1}</td>
-                        <td>${unClase.nombre}</td>
+                        <td>${unClase.nombre_clases}</td>
                         <td>${unClase.descripcion}</td>
                         <td>
                             <button class="btn btn-primary" onclick="cargarClase(${unClase.clase_id})">Editar</button>
@@ -52,67 +52,13 @@ var cargarClase = (id_clase) => {
     $.get("../controllers/clase.controller.php?op=uno&id=" + id_clase, (data) => {
         var Clase = JSON.parse(data);
         console.log("Clase encontrada:", Clase);
-        $("#EditarClaseId").val(Clase.id_clase);
-        $("#EditarClaseCurso").val(Clase.nombre_curso);
-        $("#EditarClaseProfesor").val(Clase.id_profesor);
-        $("#EditarClaseAula").val(Clase.numero_aula);
-        $("#EditarClaseHorario").val(Clase.horario);
+        $("#EditarClaseId").val(Clase.clase_id);
+        $("#NombreE").val(Clase.nombre_clases);
+        $("#DescripcionE").val(Clase.descripcion);
+
         $("#modalEditarClase").modal("show");
     });
 }
-
-function cargarCursos() {
-    $.get("../controllers/curso.controller.php?op=listarCursos", (response) => {
-        let listaCursos = JSON.parse(response);
-        let html = "<option value=''>Seleccione un Curso</option>";
-        $.each(listaCursos, (index, curso) => {
-            html += `<option value='${curso.nombre_curso}'>${curso.nombre_curso}</option>`;
-        });
-        $("#Curso").html(html);
-        $("#EditarClaseCurso").html(html);
-    });
-}
-
-function cargarProfesores(){
-    $.get("../controllers/profesor.controller.php?op=listarComboProfesores", (response) => {
-        let listaProfesores = JSON.parse(response);
-        let html = "<option value=''>Seleccione un Profesor</option>";
-        $.each(listaProfesores, (index, profesor) => {
-            html += `<option value='${profesor.id_profesor}'>${profesor.id_profesor} - ${profesor.nombre_profesor} ${profesor.apellido_profesor}</option>`;
-        });
-        $("#ID_Profesor").html(html);
-        $("#EditarClaseProfesor").html(html);
-    });
-}
-
-function cargarAulas(){
-    $.get("../controllers/aula.controller.php?op=listarComboAulas", (response) => {
-        let listaAulas = JSON.parse(response);
-        let html = "<option value=''>Seleccione un Aula</option>";
-        $.each(listaAulas, (index, aula) => {
-            html += `<option value='${aula.numero_aula}'>${aula.numero_aula}</option>`;
-        });
-        $("#Aula").html(html);
-        $("#EditarClaseAula").html(html);
-    });
-}
-
-function cargarHorarios(){
-    let horarios = ["7:00 - 8:30",
-         "8:45 - 10:15", 
-         "10:30 - 12:00", 
-         "12:15 - 13:45", 
-         "14:00 - 15:30"];
-    
-    let html = "<option value=''>Seleccione un Horario</option>";
-    $.each(horarios, (index, horario) => {
-        html += `<option value='${horario}'>${horario}</option>`;
-    });
-
-    $("#Horario").html(html);
-    $("#EditarClaseHorario").html(html);
-}
-
 
 var guardar = (e) => {
     
@@ -179,7 +125,7 @@ var eliminar = (ClasesId) => {
             $.ajax({
                 url: "../controllers/clase.controller.php?op=eliminar",
                 type: "POST",
-                data: { id_clase: ClasesId },
+                data: { ClasesId: ClasesId },
                 success: (resultado) => {
                     console.log("Respuesta del servidor:", resultado);
                     try {
@@ -191,7 +137,8 @@ var eliminar = (ClasesId) => {
                                 icon: "success",
                             });
                             cargaTabla();
-                        }
+                            
+                        }location.reload();
                     } catch (e) {
                         Swal.fire({
                             title: "Clase",

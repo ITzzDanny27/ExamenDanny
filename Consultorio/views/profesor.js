@@ -49,57 +49,55 @@ var cargaTabla = () => {
     });
 }
 
-var buscarProfesor = (id_profe) => {
-    $.get("../controllers/profesor.controller.php?op=uno&id=" + id_profe, (Profesor) => {
-        try{
-            var Profesor = JSON.parse(Profesor);
-
-            if(Profesor && Profesor.id_profesor){
-                console.log("Profesor encontrado:", Profesor);
-                var html = "";
-                html += `
-                    <tr>
-                        <td>${Profesor.id_profesor}</td>
-                        <td>${Profesor.nombre_profesor}</td>
-                        <td>${Profesor.apellido_profesor}</td>
-                        <td>${Profesor.nombre_departamento}</td>
-                        <td>
-                            <button class="btn btn-primary" onclick="cargarProfesor(${Profesor.id_profesor})">Editar</button>
-                            <button class="btn btn-danger" onclick="eliminar(${Profesor.id_profesor})">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-
-                $("#cuerpoprofesores").html(html);
-            }else{
-                console.error("Profesor no encontrado:", Profesor);
-                cargaTabla();
-            }
-
-        }catch(e){
-            console.error("Error parsing JSON:", e);
-        }
-        
-    });
-}
-
-
-
 var cargarProfesor = (id_profesor) =>{
     console.log(id_profesor);
     $.get("../controllers/profesor.controller.php?op=uno&id="+ id_profesor, (data) => {
         var Profesor = JSON.parse(data);
         console.log("Clase encontrada:", Profesor);
 
-        $("#EditarProfesoresId").val(Profesor.id_profesor);
-        $("#EditarNombre").val(Profesor.nombre_profesor);
-        $("#EditarApellido").val(Profesor.apellido_profesor);
-        $("#EditarDepartamento").val(Profesor.nombre_departamento);
+        $("#EditarProfesoresId").val(Profesor.profesor_id);
+        $("#EditarNombre").val(Profesor.nombre);
+        $("#EditarApellido").val(Profesor.apellido);
+        $("#EspecialidadE").val(Profesor.especialidad);
+        $("#EditarEmail").val(Profesor.email);
+
         $("#modalEditarProfesor").modal("show");
     });
 }
 
+// var buscarProfesor = (id_profe) => {
+//     $.get("../controllers/profesor.controller.php?op=uno&id=" + id_profe, (Profesor) => {
+//         try{
+//             var Profesor = JSON.parse(Profesor);
 
+//             if(Profesor && Profesor.id_profesor){
+//                 console.log("Profesor encontrado:", Profesor);
+//                 var html = "";
+//                 html += `
+//                     <tr>
+//                         <td>${Profesor.id_profesor}</td>
+//                         <td>${Profesor.nombre_profesor}</td>
+//                         <td>${Profesor.apellido_profesor}</td>
+//                         <td>${Profesor.nombre_departamento}</td>
+//                         <td>
+//                             <button class="btn btn-primary" onclick="cargarProfesor(${Profesor.id_profesor})">Editar</button>
+//                             <button class="btn btn-danger" onclick="eliminar(${Profesor.id_profesor})">Eliminar</button>
+//                         </td>
+//                     </tr>
+//                 `;
+
+//                 $("#cuerpoprofesores").html(html);
+//             }else{
+//                 console.error("Profesor no encontrado:", Profesor);
+//                 cargaTabla();
+//             }
+
+//         }catch(e){
+//             console.error("Error parsing JSON:", e);
+//         }
+        
+//     });
+// }
 
 function cargarDepartamentos() {
     $.get("../controllers/profesor.controller.php?op=listarDepartamentos", (response) => {
@@ -185,7 +183,7 @@ var eliminar = (ProfesoresId) => {
                                 icon: "success",
                             });
                             cargaTabla();
-                        }
+                        }location.reload();
                     } catch (e) {
                         Swal.fire({
                             title: "Profesores",

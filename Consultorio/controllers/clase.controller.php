@@ -56,8 +56,8 @@ switch($_GET["op"]) {
     case "actualizar":
 
         $clase_id = $_POST["EditarClaseId"];
-        $nombre_clase = $_POST["EditarNombreClase"];
-        $descripcion = $_POST["EditarDescripcion"];
+        $nombre_clase = $_POST["NombreE"];
+        $descripcion = $_POST["DescripcionE"];
 
         if($clase_id && $nombre_clase && $descripcion){
             $respuesta = $clase->actualizarClase($clase_id, $nombre_clase, $descripcion);
@@ -70,10 +70,10 @@ switch($_GET["op"]) {
 
 
     case "eliminar":
-        $clase_id = $_POST["ClaseId"] ?? null;
+        $ClasesId = $_POST["ClasesId"] ?? null;
 
-        if (!empty($clase_id)) {
-            $eliminado = $clase->eliminarClase($clase_id);
+        if (!empty($ClasesId)) {
+            $eliminado = $clase->eliminarClase($ClasesId);
             if ($eliminado) {
                 echo json_encode("Clase eliminada");
             } else {
