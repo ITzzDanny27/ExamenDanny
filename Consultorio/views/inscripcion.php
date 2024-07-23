@@ -128,7 +128,7 @@
                 <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#modalInscripcion">
                 <i class="bi bi-file-earmark-plus-fill"></i> Nueva Inscripcion
                 </button>
-                <h6 style="text-align: center;" class='mb-4'> Lista de Inscripcion</h6>
+                <h6 style="text-align: center; color: #FFFFFF;" class='mb-4'> Lista de Inscripcion</h6>
                 <div class='d-flex align-items-center justify-content-between mb-4'>
                     <table class="table table-bordered table-striped table-hover table-responsive">
                         <thead class="table-light">

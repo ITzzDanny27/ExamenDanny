@@ -125,7 +125,7 @@
                         <input onkeydown="if (event.keyCode === 13) buscarEstudianteInc(this.value)" style="width: 25rem;" type="text" id="buscarIncripcionEstudiante" class="form-control mb-4 mx-3" placeholder="Buscar Estudiante">
                     </div>
                 </div>
-                <h6 style="text-align: center;" class='mb-4'> Lista de Asignaciones</h6>
+                <h6 style="text-align: center; color: #FFFFFF;" class='mb-4'> Lista de Asignaciones</h6>
                 <div class='d-flex align-items-center justify-content-between mb-4'>
                     <table class="table table-bordered table-striped table-hover table-responsive">
                         <thead class="table-light">
